@@ -1,6 +1,5 @@
 # Diagrama de Classes - Checkpoint 1
 
-```mermaid
 classDiagram
     class Usuario {
         <<abstract>>
@@ -98,4 +97,4 @@ classDiagram
     DoacaoEfetivada --> ItemDoacao
     DoacaoEfetivada --> Doador
     DoacaoEfetivada --> Beneficiario
-```
+
