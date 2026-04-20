@@ -17,31 +17,42 @@ Entrega atual:
 
 
 ## Estrutura de pastas
-src/
- main/
- Main.java
- model/
- Beneficiario.java
- CategoriaItem.java
- DoacaoEfetivada.java
- Doador.java
- EstadoConservacao.java
- Identificavel.java
- ItemDoacao.java
- Solicitacao.java
- StatusItem.java
- StatusSolicitacao.java
- TipoBeneficiario.java
- Usuario.java
- repository/
- BeneficiarioRepository.java
- DoadorRepository.java
- InMemoryRepository.java
- ItemDoacaoRepository.java
- service/
- CadastroService.java
- util/
- ConsoleHelper.java
+```text
+rede-solidaria/
+|-- docs/
+|   `-- diagrama-classes-checkpoint1.md
+|-- src/
+|   |-- main/
+|   |   |-- Main.java
+|   |   `-- package-info.java
+|   |-- model/
+|   |   |-- Beneficiario.java
+|   |   |-- CategoriaItem.java
+|   |   |-- DoacaoEfetivada.java
+|   |   |-- Doador.java
+|   |   |-- EstadoConservacao.java
+|   |   |-- Identificavel.java
+|   |   |-- ItemDoacao.java
+|   |   |-- Solicitacao.java
+|   |   |-- StatusItem.java
+|   |   |-- StatusSolicitacao.java
+|   |   |-- TipoBeneficiario.java
+|   |   |-- Usuario.java
+|   |   `-- package-info.java
+|   |-- repository/
+|   |   |-- BeneficiarioRepository.java
+|   |   |-- DoadorRepository.java
+|   |   |-- InMemoryRepository.java
+|   |   |-- ItemDoacaoRepository.java
+|   |   `-- package-info.java
+|   |-- service/
+|   |   |-- CadastroService.java
+|   |   `-- package-info.java
+|   `-- util/
+|       |-- ConsoleHelper.java
+|       `-- package-info.java
+`-- README.md
+```
 
 
 
