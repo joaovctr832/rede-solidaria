@@ -60,7 +60,9 @@ public class ItemDoacaoRepository {
             }
             return itens;
         } catch (SQLException exception) {
-            throw new IllegalStateException("Nao foi possivel listar os itens no PostgreSQL.", exception);
+            throw new IllegalStateException(
+                    "Nao foi possivel listar os itens no PostgreSQL. " + SqlExceptionFormatter.format(exception),
+                    exception);
         }
     }
 
@@ -97,7 +99,9 @@ public class ItemDoacaoRepository {
                 return Optional.empty();
             }
         } catch (SQLException exception) {
-            throw new IllegalStateException("Nao foi possivel buscar o item no PostgreSQL.", exception);
+            throw new IllegalStateException(
+                    "Nao foi possivel buscar o item no PostgreSQL. " + SqlExceptionFormatter.format(exception),
+                    exception);
         }
     }
 
@@ -126,7 +130,9 @@ public class ItemDoacaoRepository {
                 return entidade;
             }
         } catch (SQLException exception) {
-            throw new IllegalStateException("Nao foi possivel salvar o item no PostgreSQL.", exception);
+            throw new IllegalStateException(
+                    "Nao foi possivel salvar o item no PostgreSQL. " + SqlExceptionFormatter.format(exception),
+                    exception);
         }
     }
 
@@ -151,7 +157,9 @@ public class ItemDoacaoRepository {
             statement.executeUpdate();
             return entidade;
         } catch (SQLException exception) {
-            throw new IllegalStateException("Nao foi possivel atualizar o item no PostgreSQL.", exception);
+            throw new IllegalStateException(
+                    "Nao foi possivel atualizar o item no PostgreSQL. " + SqlExceptionFormatter.format(exception),
+                    exception);
         }
     }
 

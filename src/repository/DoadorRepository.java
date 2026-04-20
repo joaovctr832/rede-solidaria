@@ -51,7 +51,9 @@ public class DoadorRepository {
             }
             return doadores;
         } catch (SQLException exception) {
-            throw new IllegalStateException("Nao foi possivel listar os doadores no PostgreSQL.", exception);
+            throw new IllegalStateException(
+                    "Nao foi possivel listar os doadores no PostgreSQL. " + SqlExceptionFormatter.format(exception),
+                    exception);
         }
     }
 
@@ -84,7 +86,9 @@ public class DoadorRepository {
                 return Optional.empty();
             }
         } catch (SQLException exception) {
-            throw new IllegalStateException("Nao foi possivel buscar o doador no PostgreSQL.", exception);
+            throw new IllegalStateException(
+                    "Nao foi possivel buscar o doador no PostgreSQL. " + SqlExceptionFormatter.format(exception),
+                    exception);
         }
     }
 
@@ -129,7 +133,9 @@ public class DoadorRepository {
                 connection.setAutoCommit(true);
             }
         } catch (SQLException exception) {
-            throw new IllegalStateException("Nao foi possivel salvar o doador no PostgreSQL.", exception);
+            throw new IllegalStateException(
+                    "Nao foi possivel salvar o doador no PostgreSQL. " + SqlExceptionFormatter.format(exception),
+                    exception);
         }
     }
 
@@ -168,7 +174,9 @@ public class DoadorRepository {
                 connection.setAutoCommit(true);
             }
         } catch (SQLException exception) {
-            throw new IllegalStateException("Nao foi possivel atualizar o doador no PostgreSQL.", exception);
+            throw new IllegalStateException(
+                    "Nao foi possivel atualizar o doador no PostgreSQL. " + SqlExceptionFormatter.format(exception),
+                    exception);
         }
     }
 

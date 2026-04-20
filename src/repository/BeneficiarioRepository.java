@@ -54,7 +54,10 @@ public class BeneficiarioRepository {
             }
             return beneficiarios;
         } catch (SQLException exception) {
-            throw new IllegalStateException("Nao foi possivel listar os beneficiarios no PostgreSQL.", exception);
+            throw new IllegalStateException(
+                    "Nao foi possivel listar os beneficiarios no PostgreSQL. "
+                            + SqlExceptionFormatter.format(exception),
+                    exception);
         }
     }
 
@@ -89,7 +92,9 @@ public class BeneficiarioRepository {
                 return Optional.empty();
             }
         } catch (SQLException exception) {
-            throw new IllegalStateException("Nao foi possivel buscar o beneficiario no PostgreSQL.", exception);
+            throw new IllegalStateException(
+                    "Nao foi possivel buscar o beneficiario no PostgreSQL. " + SqlExceptionFormatter.format(exception),
+                    exception);
         }
     }
 
@@ -139,7 +144,9 @@ public class BeneficiarioRepository {
                 connection.setAutoCommit(true);
             }
         } catch (SQLException exception) {
-            throw new IllegalStateException("Nao foi possivel salvar o beneficiario no PostgreSQL.", exception);
+            throw new IllegalStateException(
+                    "Nao foi possivel salvar o beneficiario no PostgreSQL. " + SqlExceptionFormatter.format(exception),
+                    exception);
         }
     }
 
@@ -182,7 +189,10 @@ public class BeneficiarioRepository {
                 connection.setAutoCommit(true);
             }
         } catch (SQLException exception) {
-            throw new IllegalStateException("Nao foi possivel atualizar o beneficiario no PostgreSQL.", exception);
+            throw new IllegalStateException(
+                    "Nao foi possivel atualizar o beneficiario no PostgreSQL. "
+                            + SqlExceptionFormatter.format(exception),
+                    exception);
         }
     }
 
