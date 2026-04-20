@@ -9,7 +9,7 @@ public enum TipoBeneficiario {
 
     private final String descricao;
 
-    TipoBeneficiario(String descricao) {
+    private TipoBeneficiario(String descricao) {
         this.descricao = descricao;
     }
 
@@ -18,4 +18,3 @@ public enum TipoBeneficiario {
         return descricao;
     }
 }
-

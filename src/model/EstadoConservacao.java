@@ -8,7 +8,7 @@ public enum EstadoConservacao {
 
     private final String descricao;
 
-    EstadoConservacao(String descricao) {
+    private EstadoConservacao(String descricao) {
         this.descricao = descricao;
     }
 
@@ -17,4 +17,3 @@ public enum EstadoConservacao {
         return descricao;
     }
 }
-

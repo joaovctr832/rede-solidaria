@@ -1,6 +1,8 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemDoacao implements Identificavel {
     private Long id;
@@ -12,6 +14,8 @@ public class ItemDoacao implements Identificavel {
     private LocalDate dataCadastro;
     private StatusItem status;
     private Doador doador;
+    private final List<Solicitacao> solicitacoes;
+    private final List<DoacaoEfetivada> doacoesEfetivadas;
 
     public ItemDoacao(
             String nome,
@@ -27,7 +31,9 @@ public class ItemDoacao implements Identificavel {
         this.estadoConservacao = estadoConservacao;
         this.dataCadastro = LocalDate.now();
         this.status = StatusItem.DISPONIVEL;
-        this.doador = doador;
+        this.solicitacoes = new ArrayList<>();
+        this.doacoesEfetivadas = new ArrayList<>();
+        this.setDoador(doador);
     }
 
     @Override
@@ -97,7 +103,84 @@ public class ItemDoacao implements Identificavel {
     }
 
     public void setDoador(Doador doador) {
+        if (this.doador == doador) {
+            return;
+        }
+
+        Doador doadorAnterior = this.doador;
         this.doador = doador;
+
+        if (doadorAnterior != null) {
+            doadorAnterior.removerItemDoacao(this);
+        }
+
+        if (doador != null && !doador.getItensDoacao().contains(this)) {
+            doador.adicionarItemDoacao(this);
+        }
+    }
+
+    public List<Solicitacao> getSolicitacoes() {
+        return List.copyOf(solicitacoes);
+    }
+
+    public void adicionarSolicitacao(Solicitacao solicitacao) {
+        validarSolicitacao(solicitacao);
+        if (solicitacoes.contains(solicitacao)) {
+            return;
+        }
+
+        solicitacoes.add(solicitacao);
+        if (solicitacao.getItemDoacao() != this) {
+            solicitacao.setItemDoacao(this);
+        }
+    }
+
+    public void removerSolicitacao(Solicitacao solicitacao) {
+        if (solicitacao == null) {
+            return;
+        }
+
+        if (solicitacoes.remove(solicitacao) && solicitacao.getItemDoacao() == this) {
+            solicitacao.setItemDoacao(null);
+        }
+    }
+
+    public List<DoacaoEfetivada> getDoacoesEfetivadas() {
+        return List.copyOf(doacoesEfetivadas);
+    }
+
+    public void adicionarDoacaoEfetivada(DoacaoEfetivada doacaoEfetivada) {
+        validarDoacaoEfetivada(doacaoEfetivada);
+        if (doacoesEfetivadas.contains(doacaoEfetivada)) {
+            return;
+        }
+
+        doacoesEfetivadas.add(doacaoEfetivada);
+        if (doacaoEfetivada.getItemDoacao() != this) {
+            doacaoEfetivada.setItemDoacao(this);
+        }
+    }
+
+    public void removerDoacaoEfetivada(DoacaoEfetivada doacaoEfetivada) {
+        if (doacaoEfetivada == null) {
+            return;
+        }
+
+        if (doacoesEfetivadas.remove(doacaoEfetivada) && doacaoEfetivada.getItemDoacao() == this) {
+            doacaoEfetivada.setItemDoacao(null);
+        }
+    }
+
+    private void validarSolicitacao(Solicitacao solicitacao) {
+        if (solicitacao == null) {
+            throw new IllegalArgumentException("A solicitacao informada nao pode ser nula.");
+        }
+    }
+
+    private void validarDoacaoEfetivada(DoacaoEfetivada doacaoEfetivada) {
+        if (doacaoEfetivada == null) {
+            throw new IllegalArgumentException("A doacao efetivada informada nao pode ser nula.");
+        }
     }
 
     @Override
@@ -113,4 +196,3 @@ public class ItemDoacao implements Identificavel {
                 doador != null ? doador.getNome() : "nao informado");
     }
 }
-

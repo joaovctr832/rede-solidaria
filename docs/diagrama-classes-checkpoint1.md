@@ -3,42 +3,100 @@
 classDiagram
     class Usuario {
         <<abstract>>
-        Long id
-        String nome
-        String telefone
-        String email
-        String endereco
+        -Long id
+        -String nome
+        -String telefone
+        -String email
+        -String endereco
+        +getId() Long
+        +setId(id Long) void
+        +getNome() String
+        +setNome(nome String) void
+        +getTelefone() String
+        +setTelefone(telefone String) void
+        +getEmail() String
+        +setEmail(email String) void
+        +getEndereco() String
+        +setEndereco(endereco String) void
+        #resumoBasico() String
     }
 
-    class Doador
+    class Doador {
+        -List~ItemDoacao~ itensDoacao
+        -List~DoacaoEfetivada~ doacoesEfetivadas
+        +getItensDoacao() List~ItemDoacao~
+        +adicionarItemDoacao(itemDoacao ItemDoacao) void
+        +removerItemDoacao(itemDoacao ItemDoacao) void
+        +getDoacoesEfetivadas() List~DoacaoEfetivada~
+        +adicionarDoacaoEfetivada(doacaoEfetivada DoacaoEfetivada) void
+        +removerDoacaoEfetivada(doacaoEfetivada DoacaoEfetivada) void
+    }
 
     class Beneficiario {
-        TipoBeneficiario tipo
-        int nivelPrioridade
+        -TipoBeneficiario tipo
+        -int nivelPrioridade
+        -List~Solicitacao~ solicitacoes
+        -List~DoacaoEfetivada~ doacoesEfetivadas
+        +getTipo() TipoBeneficiario
+        +setTipo(tipo TipoBeneficiario) void
+        +getNivelPrioridade() int
+        +setNivelPrioridade(nivelPrioridade int) void
+        +getSolicitacoes() List~Solicitacao~
+        +adicionarSolicitacao(solicitacao Solicitacao) void
+        +removerSolicitacao(solicitacao Solicitacao) void
+        +getDoacoesEfetivadas() List~DoacaoEfetivada~
+        +adicionarDoacaoEfetivada(doacaoEfetivada DoacaoEfetivada) void
+        +removerDoacaoEfetivada(doacaoEfetivada DoacaoEfetivada) void
     }
 
     class ItemDoacao {
-        Long id
-        String nome
-        CategoriaItem categoria
-        String descricao
-        int quantidade
-        EstadoConservacao estadoConservacao
-        LocalDate dataCadastro
-        StatusItem status
+        -Long id
+        -String nome
+        -CategoriaItem categoria
+        -String descricao
+        -int quantidade
+        -EstadoConservacao estadoConservacao
+        -LocalDate dataCadastro
+        -StatusItem status
+        -Doador doador
+        -List~Solicitacao~ solicitacoes
+        -List~DoacaoEfetivada~ doacoesEfetivadas
+        +getDoador() Doador
+        +setDoador(doador Doador) void
+        +getSolicitacoes() List~Solicitacao~
+        +adicionarSolicitacao(solicitacao Solicitacao) void
+        +removerSolicitacao(solicitacao Solicitacao) void
+        +getDoacoesEfetivadas() List~DoacaoEfetivada~
+        +adicionarDoacaoEfetivada(doacaoEfetivada DoacaoEfetivada) void
+        +removerDoacaoEfetivada(doacaoEfetivada DoacaoEfetivada) void
     }
 
     class Solicitacao {
-        Long id
-        int quantidadeSolicitada
-        String justificativa
-        StatusSolicitacao status
+        -Long id
+        -Beneficiario beneficiario
+        -ItemDoacao itemDoacao
+        -int quantidadeSolicitada
+        -String justificativa
+        -StatusSolicitacao status
+        +getBeneficiario() Beneficiario
+        +setBeneficiario(beneficiario Beneficiario) void
+        +getItemDoacao() ItemDoacao
+        +setItemDoacao(itemDoacao ItemDoacao) void
     }
 
     class DoacaoEfetivada {
-        Long id
-        LocalDate data
-        String observacoes
+        -Long id
+        -ItemDoacao itemDoacao
+        -Doador doador
+        -Beneficiario beneficiario
+        -LocalDate data
+        -String observacoes
+        +getItemDoacao() ItemDoacao
+        +setItemDoacao(itemDoacao ItemDoacao) void
+        +getDoador() Doador
+        +setDoador(doador Doador) void
+        +getBeneficiario() Beneficiario
+        +setBeneficiario(beneficiario Beneficiario) void
     }
 
     class TipoBeneficiario {
@@ -86,15 +144,14 @@ classDiagram
 
     Usuario <|-- Doador
     Usuario <|-- Beneficiario
-    Beneficiario --> TipoBeneficiario
-    ItemDoacao --> CategoriaItem
-    ItemDoacao --> EstadoConservacao
-    ItemDoacao --> StatusItem
-    ItemDoacao --> Doador
-    Solicitacao --> Beneficiario
-    Solicitacao --> ItemDoacao
-    Solicitacao --> StatusSolicitacao
-    DoacaoEfetivada --> ItemDoacao
-    DoacaoEfetivada --> Doador
-    DoacaoEfetivada --> Beneficiario
-
+    Beneficiario --> "1" TipoBeneficiario
+    ItemDoacao --> "1" CategoriaItem
+    ItemDoacao --> "1" EstadoConservacao
+    ItemDoacao --> "1" StatusItem
+    Doador "1" --> "0..*" ItemDoacao : cadastra
+    Beneficiario "1" --> "0..*" Solicitacao : realiza
+    ItemDoacao "1" --> "0..*" Solicitacao : recebe
+    Solicitacao --> "1" StatusSolicitacao
+    Doador "1" --> "0..*" DoacaoEfetivada : efetiva
+    Beneficiario "1" --> "0..*" DoacaoEfetivada : recebe
+    ItemDoacao "1" --> "0..*" DoacaoEfetivada : compoe
