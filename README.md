@@ -58,9 +58,9 @@ src/
 
 ## Exemplo rapido de execucao
 
-====================================
+```text
 Rede Solidaria - Checkpoint 1
-====================================
+
 1. Cadastrar doador
 2. Cadastrar beneficiario
 3. Cadastrar item para doacao
@@ -70,3 +70,4 @@ Rede Solidaria - Checkpoint 1
 7. Filtrar itens por categoria
 8. Filtrar itens por status
 0. Sair
+```
