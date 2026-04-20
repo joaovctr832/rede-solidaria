@@ -27,7 +27,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        new Main().executar();
+        try {
+            new Main().executar();
+        } catch (RuntimeException exception) {
+            System.out.println("Falha ao iniciar o sistema: " + exception.getMessage());
+        }
     }
 
     private void executar() {
@@ -65,7 +69,7 @@ public class Main {
                     }
                     default -> System.out.println("Opcao invalida. Escolha um item do menu.");
                 }
-            } catch (IllegalArgumentException exception) {
+            } catch (IllegalArgumentException | IllegalStateException exception) {
                 System.out.println("Nao foi possivel concluir a operacao: " + exception.getMessage());
             }
         }

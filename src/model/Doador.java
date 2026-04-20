@@ -6,6 +6,8 @@ import java.util.List;
 public class Doador extends Usuario {
     private final List<ItemDoacao> itensDoacao;
     private final List<DoacaoEfetivada> doacoesEfetivadas;
+    private int quantidadeItensDoacao;
+    private int quantidadeDoacoesEfetivadas;
 
     public Doador(String nome, String telefone, String email, String endereco) {
         super(nome, telefone, email, endereco);
@@ -17,6 +19,14 @@ public class Doador extends Usuario {
         return List.copyOf(itensDoacao);
     }
 
+    public int getQuantidadeItensDoacao() {
+        return itensDoacao.isEmpty() ? quantidadeItensDoacao : itensDoacao.size();
+    }
+
+    public void setQuantidadeItensDoacao(int quantidadeItensDoacao) {
+        this.quantidadeItensDoacao = quantidadeItensDoacao;
+    }
+
     public void adicionarItemDoacao(ItemDoacao itemDoacao) {
         validarItemDoacao(itemDoacao);
         if (itensDoacao.contains(itemDoacao)) {
@@ -24,6 +34,7 @@ public class Doador extends Usuario {
         }
 
         itensDoacao.add(itemDoacao);
+        this.quantidadeItensDoacao = itensDoacao.size();
         if (itemDoacao.getDoador() != this) {
             itemDoacao.setDoador(this);
         }
@@ -35,12 +46,21 @@ public class Doador extends Usuario {
         }
 
         if (itensDoacao.remove(itemDoacao) && itemDoacao.getDoador() == this) {
+            this.quantidadeItensDoacao = itensDoacao.size();
             itemDoacao.setDoador(null);
         }
     }
 
     public List<DoacaoEfetivada> getDoacoesEfetivadas() {
         return List.copyOf(doacoesEfetivadas);
+    }
+
+    public int getQuantidadeDoacoesEfetivadas() {
+        return doacoesEfetivadas.isEmpty() ? quantidadeDoacoesEfetivadas : doacoesEfetivadas.size();
+    }
+
+    public void setQuantidadeDoacoesEfetivadas(int quantidadeDoacoesEfetivadas) {
+        this.quantidadeDoacoesEfetivadas = quantidadeDoacoesEfetivadas;
     }
 
     public void adicionarDoacaoEfetivada(DoacaoEfetivada doacaoEfetivada) {
@@ -50,6 +70,7 @@ public class Doador extends Usuario {
         }
 
         doacoesEfetivadas.add(doacaoEfetivada);
+        this.quantidadeDoacoesEfetivadas = doacoesEfetivadas.size();
         if (doacaoEfetivada.getDoador() != this) {
             doacaoEfetivada.setDoador(this);
         }
@@ -61,6 +82,7 @@ public class Doador extends Usuario {
         }
 
         if (doacoesEfetivadas.remove(doacaoEfetivada) && doacaoEfetivada.getDoador() == this) {
+            this.quantidadeDoacoesEfetivadas = doacoesEfetivadas.size();
             doacaoEfetivada.setDoador(null);
         }
     }
@@ -82,7 +104,7 @@ public class Doador extends Usuario {
         return String.format(
                 "Doador %s | itens vinculados: %d | doacoes efetivadas: %d",
                 resumoBasico(),
-                itensDoacao.size(),
-                doacoesEfetivadas.size());
+                getQuantidadeItensDoacao(),
+                getQuantidadeDoacoesEfetivadas());
     }
 }

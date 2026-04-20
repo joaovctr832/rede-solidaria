@@ -90,6 +90,10 @@ public class ItemDoacao implements Identificavel {
         return dataCadastro;
     }
 
+    public void setDataCadastro(LocalDate dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
     public StatusItem getStatus() {
         return status;
     }

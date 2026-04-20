@@ -8,6 +8,8 @@ public class Beneficiario extends Usuario {
     private int nivelPrioridade;
     private final List<Solicitacao> solicitacoes;
     private final List<DoacaoEfetivada> doacoesEfetivadas;
+    private int quantidadeSolicitacoes;
+    private int quantidadeDoacoesEfetivadas;
 
     public Beneficiario(
             String nome,
@@ -43,6 +45,14 @@ public class Beneficiario extends Usuario {
         return List.copyOf(solicitacoes);
     }
 
+    public int getQuantidadeSolicitacoes() {
+        return solicitacoes.isEmpty() ? quantidadeSolicitacoes : solicitacoes.size();
+    }
+
+    public void setQuantidadeSolicitacoes(int quantidadeSolicitacoes) {
+        this.quantidadeSolicitacoes = quantidadeSolicitacoes;
+    }
+
     public void adicionarSolicitacao(Solicitacao solicitacao) {
         validarSolicitacao(solicitacao);
         if (solicitacoes.contains(solicitacao)) {
@@ -50,6 +60,7 @@ public class Beneficiario extends Usuario {
         }
 
         solicitacoes.add(solicitacao);
+        this.quantidadeSolicitacoes = solicitacoes.size();
         if (solicitacao.getBeneficiario() != this) {
             solicitacao.setBeneficiario(this);
         }
@@ -61,12 +72,21 @@ public class Beneficiario extends Usuario {
         }
 
         if (solicitacoes.remove(solicitacao) && solicitacao.getBeneficiario() == this) {
+            this.quantidadeSolicitacoes = solicitacoes.size();
             solicitacao.setBeneficiario(null);
         }
     }
 
     public List<DoacaoEfetivada> getDoacoesEfetivadas() {
         return List.copyOf(doacoesEfetivadas);
+    }
+
+    public int getQuantidadeDoacoesEfetivadas() {
+        return doacoesEfetivadas.isEmpty() ? quantidadeDoacoesEfetivadas : doacoesEfetivadas.size();
+    }
+
+    public void setQuantidadeDoacoesEfetivadas(int quantidadeDoacoesEfetivadas) {
+        this.quantidadeDoacoesEfetivadas = quantidadeDoacoesEfetivadas;
     }
 
     public void adicionarDoacaoEfetivada(DoacaoEfetivada doacaoEfetivada) {
@@ -76,6 +96,7 @@ public class Beneficiario extends Usuario {
         }
 
         doacoesEfetivadas.add(doacaoEfetivada);
+        this.quantidadeDoacoesEfetivadas = doacoesEfetivadas.size();
         if (doacaoEfetivada.getBeneficiario() != this) {
             doacaoEfetivada.setBeneficiario(this);
         }
@@ -87,6 +108,7 @@ public class Beneficiario extends Usuario {
         }
 
         if (doacoesEfetivadas.remove(doacaoEfetivada) && doacaoEfetivada.getBeneficiario() == this) {
+            this.quantidadeDoacoesEfetivadas = doacoesEfetivadas.size();
             doacaoEfetivada.setBeneficiario(null);
         }
     }
@@ -110,7 +132,7 @@ public class Beneficiario extends Usuario {
                 resumoBasico(),
                 tipo,
                 nivelPrioridade,
-                solicitacoes.size(),
-                doacoesEfetivadas.size());
+                getQuantidadeSolicitacoes(),
+                getQuantidadeDoacoesEfetivadas());
     }
 }
