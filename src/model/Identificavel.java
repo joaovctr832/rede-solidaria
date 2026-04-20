@@ -1,8 +1,7 @@
 package model;
 
 public interface Identificavel {
-    Long getId();
+    public Long getId();
 
-    void setId(Long id);
+    public void setId(Long id);
 }
-

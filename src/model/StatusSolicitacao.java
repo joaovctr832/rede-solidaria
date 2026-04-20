@@ -8,7 +8,7 @@ public enum StatusSolicitacao {
 
     private final String descricao;
 
-    StatusSolicitacao(String descricao) {
+    private StatusSolicitacao(String descricao) {
         this.descricao = descricao;
     }
 
@@ -17,4 +17,3 @@ public enum StatusSolicitacao {
         return descricao;
     }
 }
-

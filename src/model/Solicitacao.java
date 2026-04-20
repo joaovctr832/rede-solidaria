@@ -3,18 +3,18 @@ package model;
 public class Solicitacao implements Identificavel {
     private Long id;
     private Beneficiario beneficiario;
-    private ItemDoacao item;
+    private ItemDoacao itemDoacao;
     private int quantidadeSolicitada;
     private String justificativa;
     private StatusSolicitacao status;
 
     public Solicitacao(
             Beneficiario beneficiario,
-            ItemDoacao item,
+            ItemDoacao itemDoacao,
             int quantidadeSolicitada,
             String justificativa) {
-        this.beneficiario = beneficiario;
-        this.item = item;
+        this.setBeneficiario(beneficiario);
+        this.setItemDoacao(itemDoacao);
         this.quantidadeSolicitada = quantidadeSolicitada;
         this.justificativa = justificativa;
         this.status = StatusSolicitacao.PENDENTE;
@@ -35,15 +35,41 @@ public class Solicitacao implements Identificavel {
     }
 
     public void setBeneficiario(Beneficiario beneficiario) {
+        if (this.beneficiario == beneficiario) {
+            return;
+        }
+
+        Beneficiario beneficiarioAnterior = this.beneficiario;
         this.beneficiario = beneficiario;
+
+        if (beneficiarioAnterior != null) {
+            beneficiarioAnterior.removerSolicitacao(this);
+        }
+
+        if (beneficiario != null && !beneficiario.getSolicitacoes().contains(this)) {
+            beneficiario.adicionarSolicitacao(this);
+        }
     }
 
-    public ItemDoacao getItem() {
-        return item;
+    public ItemDoacao getItemDoacao() {
+        return itemDoacao;
     }
 
-    public void setItem(ItemDoacao item) {
-        this.item = item;
+    public void setItemDoacao(ItemDoacao itemDoacao) {
+        if (this.itemDoacao == itemDoacao) {
+            return;
+        }
+
+        ItemDoacao itemDoacaoAnterior = this.itemDoacao;
+        this.itemDoacao = itemDoacao;
+
+        if (itemDoacaoAnterior != null) {
+            itemDoacaoAnterior.removerSolicitacao(this);
+        }
+
+        if (itemDoacao != null && !itemDoacao.getSolicitacoes().contains(this)) {
+            itemDoacao.adicionarSolicitacao(this);
+        }
     }
 
     public int getQuantidadeSolicitada() {
@@ -75,10 +101,9 @@ public class Solicitacao implements Identificavel {
         return String.format(
                 "#%d - beneficiario: %s | item: %s | qtd: %d | status: %s",
                 id,
-                beneficiario.getNome(),
-                item.getNome(),
+                beneficiario != null ? beneficiario.getNome() : "nao informado",
+                itemDoacao != null ? itemDoacao.getNome() : "nao informado",
                 quantidadeSolicitada,
                 status);
     }
 }
-

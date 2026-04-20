@@ -10,7 +10,7 @@ public enum CategoriaItem {
 
     private final String descricao;
 
-    CategoriaItem(String descricao) {
+    private CategoriaItem(String descricao) {
         this.descricao = descricao;
     }
 
@@ -19,4 +19,3 @@ public enum CategoriaItem {
         return descricao;
     }
 }
-

@@ -8,6 +8,8 @@ Entrega atual:
 
 - estrutura inicial do projeto em Java
 - modelagem das principais classes do dominio
+- associacoes bidirecionais entre doador, beneficiario, item, solicitacao e doacao efetivada
+- cardinalidades explicitas no diagrama de classes
 - menu principal funcional em terminal
 - cadastro basico de doador, beneficiario e item
 - listagens e filtros simples para apoiar a demonstracao
